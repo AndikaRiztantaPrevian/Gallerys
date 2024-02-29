@@ -3,14 +3,17 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Traits\UUIDAsPrimaryKey;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, UUIDAsPrimaryKey;
 
     /**
      * The attributes that are mass assignable.
@@ -42,4 +45,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function comment(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function like(): HasMany
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function post(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function notification(): HasMany
+    {
+        return $this->hasMany(Notification::class);
+    }
 }
