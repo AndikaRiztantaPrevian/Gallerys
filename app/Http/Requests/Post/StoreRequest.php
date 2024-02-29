@@ -22,9 +22,9 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required',
             'title' => 'required|min:0|max:100',
             'description' => 'required|min:5|max:400',
+            'album_id' => 'required',
             'image' => 'required|mimes:png,jpg,jpeg'
         ];
     }
@@ -32,13 +32,13 @@ class StoreRequest extends FormRequest
     public function message()
     {
         return [
-            'user_id.required' => 'User tidak Valid',
             'title.required' => 'Judul harus diisi',
             'title.min' => 'Judul minimal 5 Kata',
             'title.max' => 'Judul maksimal 400 Kata',
             'description.required' => 'Deskripsi harus diisi',
             'description.min' => 'Judul minimal 5 Kata',
             'description.max' => 'Judul maksimal 400 Kata',
+            'album_id.required' => 'Album harus diisi',
             'image.required' => 'Anda belum memasukkan foto!',
             'image.mimes' => 'Format gambar harus PNG, JPG, JPEG',
         ];

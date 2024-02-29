@@ -4,62 +4,46 @@ namespace App\Http\Controllers;
 
 use App\Models\Album;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AlbumController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        try {
+            $data = $request->validate([
+                'name' => 'required'
+            ]);
+            $album = new Album();
+            $album->name = $data['name'];
+            $album->user_id = Auth::user()->id;
+            $album->save();
+            return response()->json(['success', 'message' => 'Anda berhasil menambahkan Album.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error', 'message' => 'Anda gagal menambahkan Album.'], 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Album $album)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Album $album)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Album $album)
     {
-        //
+        try {
+            $albumData = Album::findOrFail($album);
+            $albumData->name = $request->name;
+            $albumData->save();
+            return response()->json(['success', 'message' => 'Anda berhasil mengupdate Album ini.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error', 'message' => 'Anda gagal mengupdate Album ini.'], 500);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Album $album)
     {
-        //
+        try {
+            $albumData = Album::findOrFail($album);
+            $albumData->delete();
+            return response()->json(['success', 'message' => 'Anda telah menghapus Album'], 500);
+        } catch (\Exception $e) {
+            return response()->json(['error', 'message' => 'Anda gagal menghapus Album'], 500);
+        }
     }
 }

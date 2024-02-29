@@ -31,18 +31,33 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::resource('like', LikeController::class);
-    Route::resource('notification', NotificationController::class);
-    Route::resource('album', AlbumController::class);
-    Route::resource('comment', CommentController::class);
     
     Route::controller(PostController::class)->group(function () {
         Route::get('post', 'index')->name('post.index');
         Route::post('post/store', 'store')->name('post.store');
         Route::post('post/update/{post}', 'update')->name('post.update');
-        Route::delete('post/destroy/{post}', 'destroy')->name('post.destroy');
         Route::get('post/getData', 'getData')->name('post.getData');
+        Route::delete('post/destroy/{post}', 'destroy')->name('post.destroy');
+    });
+
+    Route::controller(LikeController::class)->group(function () {
+        Route::post('like/store', 'store')->name('like.store');
+        Route::post('like/delete/{like}', 'destroy')->name('like.destroy');
+    });
+
+    Route::controller(NotificationController::class)->group(function () {
+        Route::post('notification/store', 'store')->name('notification.store');
+        Route::post('notification/update/{notification}', 'update')->name('notification.update');
+    });
+
+    Route::controller(AlbumController::class)->group(function () {
+        Route::post('album/store', 'store')->name('album.store');
+        Route::post('album/update', 'update')->name('album.update');
+    });
+
+    Route::controller(CommentController::class)->group(function () {
+        Route::post('comment/store', 'store')->name('comment.store');
+        Route::delete('comment/delete', 'destroy')->name('comment.destory');
     });
 });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Post\StoreRequest;
 use App\Http\Requests\Post\UpdateRequest;
+use App\Models\Album;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,23 +14,27 @@ class PostController extends Controller
 {
     public function index()
     {
-        return view('post.index');
+        $post = Post::inRandomOrder()->paginate(10);
+        $album = Album::where('user_id', Auth::user()->id)->get();
+
+        return view('post.index', compact('post', 'album'));
     }
 
     public function store(StoreRequest $request)
     {
         try {
             $data = $request->validated();
-            $name_image = $data->gambar->store('gambar', 'public');
+            $name_image = $data['image']->store('gambar', 'public');
             Post::create([
                 'user_id' => Auth::user()->id,
-                'album_id' => $data->album_id,
+                'album_id' => $data['album_id'],
                 'image' => $name_image,
-                'title' => $data->title,
-                'description' => $data->description
+                'title' => $data['title'],
+                'description' => $data['description']
             ]);
             return response()->json(['success', 'message' => 'Berhasil mengupload postingan anda!'], 201);
         } catch (\Exception $e) {
+            dd($e);
             return response()->json(['error', 'message' => 'Gagal mengupload postingan anda!'], 500);
         }
     }
@@ -63,10 +68,5 @@ class PostController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error', 'message' => 'Gagal menghapus postingan anda!'], 500);
         }
-    }
-
-    protected function getData() {
-        $post = Post::inRandomOrder()->paginate();
-        return response()->json(['post' => $post]);
     }
 }

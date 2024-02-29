@@ -111,7 +111,8 @@
   </div>
 
   <div id="posting-modal" tabindex="-1" aria-hidden="true"
-    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full"
+    style="height: 100%">
     <div class=" p-4 w-full max-w-4/5 h-full">
       <!-- Modal content -->
       <div class=" bg-white rounded-lg shadow dark:bg-gray-700">
@@ -138,8 +139,8 @@
               <img style="width: 100%; height: 564px" class="object-cover"
                 src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-2.jpg" alt="">
             </div>
-            <div class="md:w-2/4 sm:w-full" style="height: 100%">
-              <div class="comment-container p-2 overflow-auto" style="max-height: 70.5%">
+            <div class="md:w-2/4 sm:w-full">
+              <div class="comment-container p-2 overflow-auto" style="max-height: 72%;">
                 <div class="user-comment flex flex-row justify-between">
                   <div class="left">
                     <div class="flex flex-row items-center mb-1">
