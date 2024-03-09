@@ -18,20 +18,33 @@ class CommentController extends Controller
             $comment->post_id = $data['post_id'];
             $comment->user_id = Auth::user()->id;
             $comment->save();
-            return response()->json(['success', 'message' => 'Pesan anda terkirim!'], 200);
+            return redirect()->back()->with('success', 'Pesan anda terkirim!');
         } catch (\Exception $e) {
-            return response()->json(['error', 'message' => 'Pesan anda gagal dikirim!'], 500);
+            return redirect()->back()->with('error', 'Pesan anda gagal dikirim!!');
+        }
+    }
+
+    public function update(Request $request, $comment)
+    {
+        try {
+            $comment = Comment::findOrFail($comment);
+            $validated = $request->validate([
+                'message' => 'required',
+            ]);
+            $comment->update($validated);
+            return redirect()->back()->with('success', 'Pesan anda berhasil di perbarui!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Pesan anda gagal di perbarui!');
         }
     }
 
     public function destroy(Comment $comment)
     {
         try {
-            $comment = Comment::findOrFail($comment);
             $comment->delete();
-            return response()->json(['success', 'message' => 'Berhasil menghapus komentar anda.'], 202);
+            return redirect()->back()->with('success', 'Berhasil menghapus komentar anda.');
         } catch (\Exception $e) {
-            return response()->json(['error', 'message' => 'Gagal menghapus komentar anda.'], 500);
+            return redirect()->back()->with('error', 'Gagal menghapus komentar anda.');
         }
     }
 }

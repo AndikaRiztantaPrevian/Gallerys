@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -30,6 +31,41 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
+
+    public function photoStore(Request $request)
+    {
+        $validated = $request->validate([
+            'image' => 'required|image|mimes:png,jpg,jpeg',
+        ]);
+
+        $newPhotoPath = $validated['image']->store('photo', 'public');
+
+        $request->user()->photo_path = $newPhotoPath;
+        $request->user()->save();
+
+        return redirect()->route('profile.edit')->with('success', 'Anda berhasil menambahkan foto ke profil Anda.');
+    }
+
+
+    public function photoUpdate(Request $request)
+    {
+        $validated = $request->validate([
+            'image' => 'required|image|mimes:png,jpg,jpeg',
+        ]);
+
+        $oldPhotoPath = $request->user()->photo_path;
+
+        if ($oldPhotoPath && Storage::disk('public')->exists($oldPhotoPath)) {
+            Storage::disk('public')->delete($oldPhotoPath);
+        }
+
+        $newPhotoPath = $validated['image']->store('photo', 'public');
+        $request->user()->photo_path = $newPhotoPath;
+        $request->user()->save();
+
+        return redirect()->route('profile.edit')->with('success', 'Anda berhasil memperbarui foto profil Anda.');
+    }
+
 
     public function destroy(Request $request): RedirectResponse
     {

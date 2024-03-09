@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->constrained('users');
-            $table->foreignUuid('album_id')->constrained('albums')->nullable();
+            $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignUuid('album_id')->constrained('albums')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->string('image');
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
             $table->timestamps();
         });
     }

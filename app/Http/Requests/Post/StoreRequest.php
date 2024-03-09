@@ -23,7 +23,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'title' => 'required|min:0|max:100',
-            'description' => 'required|min:5|max:400',
+            'description' => 'required|min:5',
             'album_id' => 'required',
             'image' => 'required|mimes:png,jpg,jpeg'
         ];
@@ -34,10 +34,9 @@ class StoreRequest extends FormRequest
         return [
             'title.required' => 'Judul harus diisi',
             'title.min' => 'Judul minimal 5 Kata',
-            'title.max' => 'Judul maksimal 400 Kata',
+            'title.max' => 'Judul maksimal 100 Kata',
             'description.required' => 'Deskripsi harus diisi',
             'description.min' => 'Judul minimal 5 Kata',
-            'description.max' => 'Judul maksimal 400 Kata',
             'album_id.required' => 'Album harus diisi',
             'image.required' => 'Anda belum memasukkan foto!',
             'image.mimes' => 'Format gambar harus PNG, JPG, JPEG',

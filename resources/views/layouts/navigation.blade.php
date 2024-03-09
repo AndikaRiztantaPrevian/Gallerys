@@ -6,7 +6,7 @@
         <!-- Logo -->
         <div class="shrink-0 flex items-center">
           <a href="{{ route('dashboard') }}">
-            <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+            <img src="{{ asset('assets/logo.png') }}" width="100" height="50" alt="">
           </a>
         </div>
 
@@ -18,7 +18,7 @@
         </div>
         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
           <x-nav-link :href="route('post.index')" :active="request()->routeIs('post.index')">
-            {{ __('Postingan Anda') }}
+            {{ __('Gallery Saya') }}
           </x-nav-link>
         </div>
       </div>
@@ -29,7 +29,7 @@
           <x-slot name="trigger">
             <button
               class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-              <div><i class="fi fi-sr-hand-wave"></i> Hai, {{ Auth::user()->name }}</div>
+              <div><i class="fi fi-sr-hand-wave text-amber-300"></i> Hai, {{ Auth::user()->name }}</div>
 
               <div class="ms-1">
                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -84,14 +84,14 @@
     </div>
     <div class="pt-2 pb-3 space-y-1">
       <x-responsive-nav-link :href="route('post.index')" :active="request()->routeIs('post.index')">
-        {{ __('Postingan Anda') }}
+        {{ __('Gallery Saya') }}
       </x-responsive-nav-link>
     </div>
 
     <!-- Responsive Settings Options -->
     <div class="pt-4 pb-1 border-t border-gray-200">
       <div class="px-4">
-        <div class="font-medium text-base text-gray-800"><i class="fi fi-sr-hand-wave"></i> Hai,
+        <div class="font-medium text-base text-gray-800"><i class="fi fi-sr-hand-wave text-amber-300"></i> Hai,
           {{ Auth::user()->name }}</div>
         <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
       </div>
@@ -108,7 +108,7 @@
           <x-responsive-nav-link :href="route('logout')"
             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-            {{ __('Log Out') }}
+            {{ __('Keluar') }}
           </x-responsive-nav-link>
         </form>
       </div>

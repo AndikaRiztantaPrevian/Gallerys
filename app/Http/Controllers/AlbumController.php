@@ -18,9 +18,9 @@ class AlbumController extends Controller
             $album->name = $data['name'];
             $album->user_id = Auth::user()->id;
             $album->save();
-            return response()->json(['success', 'message' => 'Anda berhasil menambahkan Album.'], 200);
+            return redirect()->back()->with('success', 'Anda berhasil menambahkan Album.');
         } catch (\Exception $e) {
-            return response()->json(['error', 'message' => 'Anda gagal menambahkan Album.'], 500);
+            return redirect()->back()->with('error', 'Anda gagal menambahkan Album.');
         }
     }
 
@@ -39,11 +39,10 @@ class AlbumController extends Controller
     public function destroy(Album $album)
     {
         try {
-            $albumData = Album::findOrFail($album);
-            $albumData->delete();
-            return response()->json(['success', 'message' => 'Anda telah menghapus Album'], 500);
+            $album->delete();
+            return redirect()->back()->with('success', 'Berhasil menghapus album.');
         } catch (\Exception $e) {
-            return response()->json(['error', 'message' => 'Anda gagal menghapus Album'], 500);
+            return redirect()->back()->with('error', 'Gagal menghapus album.');
         }
     }
 }

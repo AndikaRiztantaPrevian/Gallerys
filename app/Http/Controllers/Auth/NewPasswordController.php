@@ -33,6 +33,10 @@ class NewPasswordController extends Controller
             'token' => ['required'],
             'email' => ['required', 'email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ],[
+            'email.required' => 'Email harus diisi.',
+            'email.email' => 'Email tidak valid.',
+            'password.required' => 'Password harus diisi.',
         ]);
 
         // Here we will attempt to reset the user's password. If it is successful we
