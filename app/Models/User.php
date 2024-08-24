@@ -61,11 +61,6 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function notification(): HasMany
-    {
-        return $this->hasMany(Notification::class);
-    }
-
     public function album(): HasMany
     {
         return $this->hasMany(Album::class);

@@ -29,11 +29,6 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function notification(): HasMany
-    {
-        return $this->hasMany(Notification::class);
-    }
-
     public function album(): BelongsTo
     {
         return $this->belongsTo(Album::class);
